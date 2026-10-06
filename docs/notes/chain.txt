@@ -1,0 +1,289 @@
+========================================
+TRIBAL SCHOLARSHIP APP - API CHAIN
+========================================
+
+Base URL:
+http://127.0.0.1:8000
+
+Swagger:
+http://127.0.0.1:8000/docs
+
+
+========================================
+PHASE 1 - BATCH 1
+========================================
+
+1. Health
+METHOD: GET
+ENDPOINT:
+/health
+
+
+2. API Root
+METHOD: GET
+ENDPOINT:
+/api/v1
+
+
+3. Register
+METHOD: POST
+ENDPOINT:
+/api/v1/auth/register
+
+
+4. Login
+METHOD: POST
+ENDPOINT:
+/api/v1/auth/login
+
+
+5. Current User
+METHOD: GET
+ENDPOINT:
+/api/v1/auth/me
+
+
+6. Get My Student Profile
+METHOD: GET
+ENDPOINT:
+/api/v1/students/me
+
+
+7. Create My Student Profile
+METHOD: POST
+ENDPOINT:
+/api/v1/students/me
+
+
+8. Update My Student Profile
+METHOD: PUT
+ENDPOINT:
+/api/v1/students/me
+
+
+9. Get Student By ID
+METHOD: GET
+ENDPOINT:
+/api/v1/students/{student_id}
+
+
+10. Get My Student Status
+METHOD: GET
+ENDPOINT:
+/api/v1/students/me/status
+
+
+========================================
+PHASE 2 - BATCH 2
+SCHOLARSHIP APIs
+========================================
+
+11. List Scholarships
+METHOD: GET
+ENDPOINT:
+/api/v1/scholarships
+
+
+12. Get Scholarship By ID
+METHOD: GET
+ENDPOINT:
+/api/v1/scholarships/{scholarship_id}
+
+
+13. Get Scholarship By Code
+METHOD: GET
+ENDPOINT:
+/api/v1/scholarships/code/{short_name}
+
+
+14. Search Scholarships
+METHOD: GET
+ENDPOINT:
+/api/v1/scholarships/search?q={query}
+
+
+15. Scholarship Summary
+METHOD: GET
+ENDPOINT:
+/api/v1/scholarships/summary
+
+
+========================================
+PHASE 2 - BATCH 2
+APPLICATION APIs
+========================================
+
+16. Create Application
+METHOD: POST
+ENDPOINT:
+/api/v1/applications
+
+
+17. List My Applications
+METHOD: GET
+ENDPOINT:
+/api/v1/applications
+
+
+18. Get My Application
+METHOD: GET
+ENDPOINT:
+/api/v1/applications/{application_id}
+
+
+19. Update My Application
+METHOD: PUT
+ENDPOINT:
+/api/v1/applications/{application_id}
+
+
+20. Delete My Application
+METHOD: DELETE
+ENDPOINT:
+/api/v1/applications/{application_id}
+
+
+========================================
+PHASE 3 - BATCH 3
+DOCUMENT APIs
+========================================
+
+21. Register Document
+METHOD: POST
+ENDPOINT:
+/api/v1/documents
+
+
+22. List My Documents
+METHOD: GET
+ENDPOINT:
+/api/v1/documents
+
+
+23. Get Document By ID
+METHOD: GET
+ENDPOINT:
+/api/v1/documents/{document_id}
+
+
+24. Update Document
+METHOD: PUT
+ENDPOINT:
+/api/v1/documents/{document_id}
+
+
+25. Delete Document
+METHOD: DELETE
+ENDPOINT:
+/api/v1/documents/{document_id}
+
+
+26. Get Document Verification Details
+METHOD: GET
+ENDPOINT:
+/api/v1/documents/{document_id}/verification
+
+
+========================================
+PHASE 3 - BATCH 3
+VERIFICATION APIs
+========================================
+
+27. List All Student Verifications
+METHOD: GET
+ENDPOINT:
+/api/v1/verifications
+
+
+28. Get Verification By Document ID
+METHOD: GET
+ENDPOINT:
+/api/v1/verifications/document/{document_id}
+
+
+29. Get Verification By ID
+METHOD: GET
+ENDPOINT:
+/api/v1/verifications/{verification_id}
+
+
+========================================
+PHASE 4 - BATCH 4
+PAYMENT APIs
+========================================
+
+30. List My Payments
+METHOD: GET
+ENDPOINT:
+/api/v1/payments
+
+
+31. Get Payment By ID
+METHOD: GET
+ENDPOINT:
+/api/v1/payments/{payment_id}
+
+
+32. Get Payments For Application
+METHOD: GET
+ENDPOINT:
+/api/v1/payments/application/{application_id}
+
+
+33. Payment Summary
+METHOD: GET
+ENDPOINT:
+/api/v1/payments/summary
+
+
+========================================
+AUTHENTICATION
+========================================
+
+Protected endpoints require:
+
+Authorization: Bearer <access_token>
+
+Public endpoints:
+- GET /health
+- GET /api/v1
+- POST /api/v1/auth/register
+- POST /api/v1/auth/login
+- GET /api/v1/scholarships
+- GET /api/v1/scholarships/{scholarship_id}
+- GET /api/v1/scholarships/code/{short_name}
+- GET /api/v1/scholarships/search
+- GET /api/v1/scholarships/summary
+
+Protected endpoints:
+- GET /api/v1/auth/me
+- GET /api/v1/students/me
+- POST /api/v1/students/me
+- PUT /api/v1/students/me
+- GET /api/v1/students/{student_id}
+- GET /api/v1/students/me/status
+- POST /api/v1/applications
+- GET /api/v1/applications
+- GET /api/v1/applications/{application_id}
+- PUT /api/v1/applications/{application_id}
+- DELETE /api/v1/applications/{application_id}
+- POST /api/v1/documents
+- GET /api/v1/documents
+- GET /api/v1/documents/{document_id}
+- PUT /api/v1/documents/{document_id}
+- DELETE /api/v1/documents/{document_id}
+- GET /api/v1/documents/{document_id}/verification
+
+- GET /api/v1/verifications
+- GET /api/v1/verifications/document/{document_id}
+- GET /api/v1/verifications/{verification_id}
+- GET /api/v1/payments
+- GET /api/v1/payments/summary
+- GET /api/v1/payments/application/{application_id}
+- GET /api/v1/payments/{payment_id}
+
+
+========================================
+END
+========================================
+

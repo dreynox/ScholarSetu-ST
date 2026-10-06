@@ -1,0 +1,343 @@
+MoTA Unified Scholarship Platform
+Backend Development Progress
+
+==================================================
+PHASE 1 — AUTHENTICATION + STUDENT APIs
+==================================================
+
+Phase: Backend Development
+Batch: 1
+Status: COMPLETED
+Last Updated: 2026-10-03
+
+Completed:
+1. Project setup (FastAPI, Pydantic, Settings)
+2. Supabase connection (Dual client architecture)
+3. Authentication (Register, Login, /auth/me)
+4. Student APIs (Profile CRUD, status, ownership protection)
+
+Verification & Testing:
+- 22/22 tests passed (100% pass rate)
+
+Endpoints:
+GET  /health
+GET  /api/v1
+POST /api/v1/auth/register
+POST /api/v1/auth/login
+GET  /api/v1/auth/me
+GET  /api/v1/students/me
+POST /api/v1/students/me
+PUT  /api/v1/students/me
+GET  /api/v1/students/{student_id}
+GET  /api/v1/students/me/status
+
+==================================================
+PHASE 2 — SCHOLARSHIP + APPLICATION APIs
+==================================================
+
+Phase: Backend Development
+Batch: 2
+Status: COMPLETED
+Last Updated: 2026-10-05
+
+Completed:
+1. Scholarship APIs (List, lookup by ID, lookup by code, search, summary)
+2. Application APIs (Create draft, list own, get by ID, update draft, delete draft)
+3. Ownership enforcement (JWT auth_user_id -> student.id -> application.student_id)
+4. Duplicate application protection (Student + Scheme + Academic Year)
+5. Unique ID generation (TRB-APP-XXXXXX)
+
+Verification & Testing:
+- 29/29 Batch 2 tests passed (10 Scholarship + 19 Application)
+- Total suite: 51/51 tests passed (100% pass rate)
+
+Endpoints:
+GET    /api/v1/scholarships
+GET    /api/v1/scholarships/summary
+GET    /api/v1/scholarships/search
+GET    /api/v1/scholarships/code/{short_name}
+GET    /api/v1/scholarships/{scholarship_id}
+POST   /api/v1/applications
+GET    /api/v1/applications
+GET    /api/v1/applications/{application_id}
+PUT    /api/v1/applications/{application_id}
+DELETE /api/v1/applications/{application_id}
+
+==================================================
+PHASE 3 — DOCUMENT + VERIFICATION APIs
+==================================================
+
+Current Status:
+Phase: Backend Development
+Batch: 3
+Scope:
+- Document APIs
+- Verification APIs
+Status: COMPLETED
+Last Updated: 2026-10-05
+
+Previous Batches Reference:
+- Batch 1 — Authentication + Student APIs (COMPLETED)
+- Batch 2 — Scholarship + Application APIs (COMPLETED)
+
+Document APIs:
+POST   /api/v1/documents                           PASS
+GET    /api/v1/documents                            PASS
+GET    /api/v1/documents/{document_id}              PASS
+PUT    /api/v1/documents/{document_id}              PASS
+DELETE /api/v1/documents/{document_id}              PASS
+GET    /api/v1/documents/{document_id}/verification PASS
+
+Verification APIs:
+GET    /api/v1/verifications                        PASS
+GET    /api/v1/verifications/{verification_id}      PASS
+GET    /api/v1/verifications/document/{document_id} PASS
+
+Verifier Mutation Workflow: NOT IMPLEMENTED
+Reason: No authorized verifier/admin workflow exists yet.
+Student self-verification is strictly prohibited.
+
+==================================================
+FILES CREATED / MODIFIED
+==================================================
+
+Created:
+- backend/app/models/document.py
+- backend/app/models/verification.py
+- backend/app/schemas/document.py
+- backend/app/schemas/verification.py
+- backend/app/services/document_service.py
+- backend/app/services/verification_service.py
+- backend/app/routes/documents.py
+- backend/app/routes/verifications.py
+- backend/tests/test_documents.py
+- backend/tests/test_verifications.py
+
+Modified:
+- backend/app/models/__init__.py
+- backend/app/schemas/__init__.py
+- backend/app/services/__init__.py
+- backend/app/routes/__init__.py
+- backend/app/main.py
+- backend/app/core/dependencies.py
+- backend/bottle.txt
+- backend/README.md
+
+==================================================
+TESTING
+==================================================
+
+Batch 1 tests (Health, Auth, Student): 22/22 PASS
+Batch 2 tests (Scholarship, Application): 29/29 PASS
+Batch 3 Document tests: 15/15 PASS
+Batch 3 Verification tests: 8/8 PASS
+Total tests: 74
+Passed: 74
+Failed: 0 (100% pass rate)
+
+==================================================
+SECURITY TESTING
+==================================================
+
+JWT authentication: PASS
+Student ownership: PASS
+Cross-student document access: PASS (404 Not Found isolation)
+Cross-student verification access: PASS (404 Not Found isolation)
+Student self-verification prevention: PASS (POST/PUT rejected)
+Protected verification fields: PASS
+ID spoofing prevention: PASS (Identity strictly derived from token)
+RLS status: ENABLED
+
+==================================================
+DATABASE STATUS
+==================================================
+
+Tables modified: NONE
+Tables created: NONE
+Tables dropped: NONE
+RLS disabled: NO
+Foreign keys disabled: NO
+Scholarship seed records modified: NO
+
+Existing tables used:
+- tribe_students
+- tribe_scholarships
+- tribe_applications
+- tribe_documents
+- tribe_document_verifications
+- tribe_verifications
+
+==================================================
+KNOWN ISSUES
+==================================================
+
+None
+
+==================================================
+NOT STARTED
+==================================================
+
+- Payment APIs
+- Notification APIs
+- Admin APIs
+- JAGO
+- RAG
+- OCR
+- AI verification
+- Frontend
+- Deployment
+- Government integrations
+
+==================================================
+PHASE 4 — PAYMENT APIs
+==================================================
+
+Phase: Backend Development
+Batch: 4
+Status: COMPLETED
+Last Updated: 2026-10-06
+
+Previous Batches Reference:
+- Batch 1 — Authentication + Student APIs (COMPLETED, 22 tests)
+- Batch 2 — Scholarship + Application APIs (COMPLETED, 29 tests)
+- Batch 3 — Document + Verification APIs (COMPLETED, 23 tests)
+
+Payment APIs:
+GET    /api/v1/payments                              PASS
+GET    /api/v1/payments/{payment_id}                 PASS
+GET    /api/v1/payments/application/{application_id} PASS
+GET    /api/v1/payments/summary                      PASS
+
+Student Payment Mutation APIs: NOT IMPLEMENTED
+Reason: In accordance with MoTA security architecture, students have read-only access to disbursements. Payment creation/processing is reserved for authorized backend/government payment channels.
+
+==================================================
+1. DATABASE SCHEMA INSPECTION
+==================================================
+
+Table: tribe_disbursements
+Actual Columns:
+- id (UUID, Primary Key)
+- payment_id (VARCHAR/TEXT, Unique Business Identifier, e.g. TRB-PAY-XXXXXX)
+- application_id (UUID, Foreign Key -> tribe_applications.id)
+- student_id (UUID, Foreign Key -> tribe_students.id)
+- amount (NUMERIC/FLOAT, Disbursement amount in INR)
+- payment_status (VARCHAR/TEXT, e.g. PENDING, PROCESSING, SUCCESS, FAILED)
+- transaction_reference (VARCHAR/TEXT, Bank transaction reference)
+- utr_number (VARCHAR/TEXT, Unique Transaction Reference)
+- payment_date (TIMESTAMPTZ/DATE, Disbursement timestamp)
+- bank_name (VARCHAR/TEXT, Disbursing or Beneficiary Bank)
+- failure_reason (VARCHAR/TEXT, Detailed reason if failed)
+- created_at (TIMESTAMPTZ)
+- updated_at (TIMESTAMPTZ)
+
+Relationships:
+- tribe_students.id -> tribe_disbursements.student_id
+- tribe_applications.id -> tribe_disbursements.application_id
+- tribe_scholarships.id -> tribe_applications.scholarship_id
+
+RLS Status: ENABLED
+
+==================================================
+2. FILES CREATED / MODIFIED
+==================================================
+
+Created:
+- backend/app/models/payment.py
+- backend/app/schemas/payment.py
+- backend/app/services/payment_service.py
+- backend/app/routes/payments.py
+- backend/tests/test_payments.py
+
+Modified:
+- backend/app/models/__init__.py
+- backend/app/schemas/__init__.py
+- backend/app/services/__init__.py
+- backend/app/routes/__init__.py
+- backend/app/main.py
+- backend/README.md
+- backend/chain.txt
+- backend/bottle.txt
+
+==================================================
+3. TESTING
+==================================================
+
+Batch 1 tests (Health, Auth, Student): 22/22 PASS
+Batch 2 tests (Scholarship, Application): 29/29 PASS
+Batch 3 Document tests: 15/15 PASS
+Batch 3 Verification tests: 8/8 PASS
+Batch 4 Payment tests: 18/18 PASS
+Total tests: 92
+Passed: 92
+Failed: 0 (100% pass rate)
+
+==================================================
+4. SECURITY TESTING
+==================================================
+
+JWT authentication: PASS (Enforced on all 4 payment endpoints)
+Student ownership: PASS (Derived strictly from token: JWT -> auth_user_id -> student.id)
+Cross-student payment access: PASS (404 Not Found isolation)
+Cross-student application payment access: PASS (404 Not Found isolation)
+Student ID spoofing prevention: PASS (Identity strictly derived from token)
+No unnecessary internal UUID exposure: PASS (Clean business IDs exposed)
+Student payment mutation prevention: PASS (POST/PUT/DELETE rejected with 404/405)
+RLS status: ENABLED
+
+==================================================
+5. DATABASE STATUS
+==================================================
+
+Tables modified: NONE
+Tables created: NONE
+Tables dropped: NONE
+RLS disabled: NO
+Foreign keys disabled: NO
+Constraints removed: NO
+Scholarship seed records modified: NO
+Synthetic records: CLEANED (0 test records remain)
+
+Existing tables used:
+- tribe_students
+- tribe_scholarships
+- tribe_applications
+- tribe_documents
+- tribe_document_verifications
+- tribe_verifications
+- tribe_disbursements
+
+==================================================
+6. KNOWN ISSUES
+==================================================
+
+None
+
+==================================================
+7. NOT STARTED
+==================================================
+
+- Notification APIs
+- Admin APIs
+- JAGO
+- RAG
+- OCR
+- AI verification
+- Frontend
+- Deployment
+- Government integrations
+
+==================================================
+8. FINAL STATUS
+==================================================
+
+PHASE 4 COMPLETED
+
+Payment APIs: PASS
+Regression tests: 92/92 PASS
+Security tests: PASS
+Database safety: PASS
+bottle.txt updated: YES
+
+STOP — WAITING FOR EXPLICIT INSTRUCTION BEFORE NOTIFICATION APIS
+
